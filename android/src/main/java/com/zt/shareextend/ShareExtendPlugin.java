@@ -27,7 +27,7 @@ import java.util.Map;
 public class ShareExtendPlugin implements MethodChannel.MethodCallHandler, PluginRegistry.RequestPermissionsResultListener {
 
     /// the authorities for FileProvider
-    private static final String authorities = "com.zt.shareextend.fileprovider";
+    // private static final String authorities = "com.zt.shareextend.fileprovider";
     private static final int CODE_ASK_PERMISSION = 100;
     private static final String CHANNEL = "share_extend";
 
@@ -130,7 +130,8 @@ public class ShareExtendPlugin implements MethodChannel.MethodCallHandler, Plugi
 
     private static Uri getUriForFile(Context context, File file) {
         if (Build.VERSION.SDK_INT >= 24) {
-            return FileProvider.getUriForFile(context, authorities, file);
+            String packageName = context.getPackageName();
+            return FileProvider.getUriForFile(context, packageName + ".fileProvider", file);
         } else {
             return Uri.fromFile(file);
         }
